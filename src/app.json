@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/combo/scan/main",
+    "pages/combo/submit/main",
+
+    "pages/login/main",
+    "pages/index/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  }
+}
