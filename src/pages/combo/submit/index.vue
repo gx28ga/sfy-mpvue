@@ -38,8 +38,15 @@
       v-for="(combo,index) in comboList"
       :key="index"
       :combo="combo"
-      @submit="handleSubmit"
+      @submit="showModal"
     ></combo-view>
+    <weui-modal
+      ref="confirm"
+      title="是否预定该套餐？"
+      content=" "
+      :showCancel="true"
+      @confirm="handleSubmit"
+    ></weui-modal>
   </div>
 </template>
 
@@ -49,6 +56,8 @@ import { formatNumber, formatFullDate } from "../../../utils";
 import { getComboList, submitCombo } from "../../../api";
 import ComboView from "../../../widgets/combo-view";
 import DialogView from "../../../widgets/dialog-view";
+import WeuiModal from "mpvue-weui/src/modal";
+
 export default {
   beforeMount() {
     this.getWeeks().then(date => {
@@ -57,7 +66,8 @@ export default {
   },
   components: {
     ComboView,
-    DialogView
+    DialogView,
+    WeuiModal
   },
   data() {
     return {
@@ -65,7 +75,9 @@ export default {
       comboList: [],
       show: false,
       needs: [],
-      selectedNeed: null
+      selectedNeed: null,
+      caterTypeId: "",
+      list: []
     };
   },
   computed: {
@@ -75,20 +87,37 @@ export default {
     handleSelectNeeds(data) {
       this.selectedNeed = data;
     },
-    handleSubmit(data) {
+    showModal(data) {
+      this.$refs.confirm.show();
+      const { caterTypeId, list } = data;
+      this.caterTypeId = caterTypeId;
+      this.list = list;
+    },
+    handleSubmit() {
       const userId = 1;
       const { bizCardNumber } = this.memberInfo;
-      const { caterTypeId, list } = data;
 
       const startDate = formatFullDate(
         this.weeks.filter(item => item.pressed === true)[0].monday
       );
-
-      submitCombo(startDate, bizCardNumber, caterTypeId, userId, list).then(
-        data => {
-          console.log(data);
+      submitCombo(
+        startDate,
+        bizCardNumber,
+        this.caterTypeId,
+        userId,
+        this.list
+      ).then(data => {
+        console.log(data);
+        if (data.status === "100") {
+          wx.showToast({
+            title: "预定成功",
+            icon: "none"
+          });
+          wx.reLaunch({
+            url: "/pages/index/main"
+          });
         }
-      );
+      });
     },
     getList(date) {
       getComboList(this.memberInfo.hrId, formatFullDate(date)).then(data => {

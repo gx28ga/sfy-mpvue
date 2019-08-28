@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container bg-gray">
     <scroll-view
       :style="{'height': '100%'}"
       scroll-y
@@ -18,7 +18,7 @@
             class="user-avatar"
           />
 
-          <div class="user-name">服务专员：李小白</div>
+          <div class="user-name">{{username}}</div>
         </div>
       </div>
       <primary-navbar></primary-navbar>
@@ -36,12 +36,17 @@ import SecondaryNavbar from "../../widgets/secondary-nav";
 
 export default {
   beforeMount() {
-    let app = getApp();
-    console.log(app.globalData.userInfo);
+    let _this = this;
+    wx.getStorage({
+      key: "username",
+      success(res) {
+        _this.username = res.data;
+      }
+    });
   },
   data() {
     return {
-      str: "abc"
+      username: ""
     };
   },
   computed: {

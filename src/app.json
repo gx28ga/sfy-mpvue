@@ -1,15 +1,19 @@
 {
   "pages": [
+    "pages/login/main",
+    "pages/index/main",
+
+    "pages/inspect/list/main",
+    "pages/inspect/detail/main",
     "pages/combo/scan/main",
     "pages/combo/submit/main",
-
-    "pages/login/main",
-    "pages/index/main"
+    "pages/service/list/main",
+    "pages/activity/list/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#3598db",
+    "navigationBarTitleText": "三福院扫码",
+    "navigationBarTextStyle": "white"
   }
 }

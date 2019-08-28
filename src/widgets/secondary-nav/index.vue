@@ -40,23 +40,24 @@ export default {
           src: "/static/images/tcyd.png",
           url: "/pages/combo/scan/main"
         },
-        {
-          name: "炒菜外送",
-          src: "/static/images/ccdc.png"
-          // url: "/pages/cooking-page/index"
-        },
-        {
-          name: "菜谱点餐",
-          src: "/static/images/stdc.png"
-        },
+        // {
+        //   name: "炒菜外送",
+        //   src: "/static/images/ccdc.png"
+        //   // url: "/pages/cooking-page/index"
+        // },
+        // {
+        //   name: "菜谱点餐",
+        //   src: "/static/images/stdc.png"
+        // },
         {
           name: "活动签到",
-          src: "/static/images/hdqd.png"
+          src: "/static/images/hdqd.png",
+          url: "/pages/activity/list/main"
         },
-        {
-          name: "扫码查询",
-          src: "/static/images/smcx.png"
-        },
+        // {
+        //   name: "扫码查询",
+        //   src: "/static/images/smcx.png"
+        // },
         {
           name: "请假登记",
           src: "/static/images/qjdj.png"
@@ -64,14 +65,21 @@ export default {
         },
         {
           name: "日常巡查",
-          src: "/static/images/rcxc.png"
-          // url: "/pages/vacation-page/index"
+          src: "/static/images/rcxc.png",
+          url: "/pages/inspect/list/main"
         }
       ]
     };
   },
   methods: {
     goPage(url, type = "") {
+      if (!url) {
+        wx.showToast({
+          title: "即将上线",
+          icon: "none"
+        });
+        return;
+      }
       wx.navigateTo({
         url,
         type

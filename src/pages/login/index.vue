@@ -19,6 +19,8 @@
           <input
             placeholder="请输入账号"
             class="input"
+            type="text"
+            v-model="username"
           />
         </div>
         <div class="divider"></div>
@@ -32,6 +34,7 @@
             placeholder="请输入密码"
             class="input"
             type="password"
+            v-model="password"
           />
         </div>
       </div>
@@ -44,11 +47,56 @@
 </template>
 
 <script>
+import { login } from "../../api";
 export default {
+  data() {
+    return {
+      username: "",
+      password: ""
+    };
+  },
   methods: {
     login() {
-      wx.navigateTo({
-        url: "/pages/index/main"
+      if (!this.username) {
+        wx.showToast({
+          title: "请输入用户名",
+          icon: "none"
+        });
+        return;
+      }
+      if (!this.password) {
+        wx.showToast({
+          title: "请输入密码",
+          icon: "none"
+        });
+        return;
+      }
+      login(this.username, this.password).then(data => {
+        const { result, id } = data;
+        if (result === 0 && id) {
+          wx.setStorage({
+            key: "id",
+            data: id
+          });
+          wx.setStorage({
+            key: "username",
+            data: this.username
+          });
+
+          wx.navigateTo({
+            url: "/pages/index/main"
+          });
+
+          wx.showToast({
+            title: "登录成功",
+            icon: "none"
+          });
+        } else if (result === 1) {
+          wx.showToast({
+            title: "登录失败",
+            icon: "none"
+          });
+        }
       });
     }
   }
@@ -113,5 +161,10 @@ export default {
   font-size: 36rpx;
   color: #3c9cde;
   background-color: #e3f9ff;
+}
+.divider {
+  width: 100%;
+  height: 2rpx;
+  background-color: #cbcbcb;
 }
 </style>

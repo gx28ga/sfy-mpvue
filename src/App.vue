@@ -56,9 +56,12 @@ button {
   background-color: #308ecc;
 }
 
-.divider {
-  width: 100%;
-  height: 2rpx;
-  background-color: #cbcbcb;
+.btn-primary {
+  color: #fff;
+  background-color: #308ecc;
+  border-color: #308ecc;
+  font-size: 17px;
+  height: 40px;
+  border-radius: 4px;
 }
 </style>
